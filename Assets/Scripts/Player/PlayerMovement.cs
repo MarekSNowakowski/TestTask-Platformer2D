@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
@@ -12,6 +13,9 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private GroundCheck groundCheck;
+
+    [SerializeField]
+    private PlayerAnimations playerAnimations;
 
     private Rigidbody2D myRigidbody;
     private bool facingRight = true;
@@ -39,7 +43,22 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         moveInputX = Input.GetAxis(HORIZONTAL_AXIS);
+
+        SetRunningAnimation();
+
         myRigidbody.velocity = new Vector2(moveInputX * horizontalSpeed, myRigidbody.velocity.y);
+    }
+
+    private void SetRunningAnimation()
+    {
+        if (Mathf.Abs(moveInputX) > 0)
+        {
+            playerAnimations.SetRunningBool(true);
+        }
+        else
+        {
+            playerAnimations.SetRunningBool(false);
+        }
     }
 
     private void Jump()
@@ -52,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
         {
             myRigidbody.velocity = Vector2.up * jumpSpeed;
             extraJumpsLeft--;
+            playerAnimations.SetJumpingBool(true);
         }
     }
 
