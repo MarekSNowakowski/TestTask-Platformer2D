@@ -3,6 +3,9 @@ using UnityEngine;
 [RequireComponent(typeof(Animator), typeof(Rigidbody2D))]
 public class PlayerAnimations : MonoBehaviour
 {
+    [SerializeField]
+    private ParticleSystem dustPS;
+
     private Animator animator;
     private Rigidbody2D myRigidbody;
 
@@ -21,9 +24,15 @@ public class PlayerAnimations : MonoBehaviour
         animator.SetBool(PLAYER_RUNNING, running);
     }
 
-    public void SetJumpingBool(bool jumping)
+    private void SetJumpingBool(bool jumping)
     {
         animator.SetBool(PLAYER_JUMPING, jumping);
+    }
+
+    public void StartJumpingAnimation()
+    {
+        SetJumpingBool(true);
+        CreateDust();
     }
 
     //Set jumping bool to flase inside of startJump animation
@@ -50,4 +59,6 @@ public class PlayerAnimations : MonoBehaviour
             SetFallingBool(false);
         }
     }
+
+    public void CreateDust() { dustPS.Play(); }
 }

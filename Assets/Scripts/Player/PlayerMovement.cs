@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
         {
             myRigidbody.velocity = Vector2.up * jumpSpeed;
             extraJumpsLeft--;
-            playerAnimations.SetJumpingBool(true);
+            playerAnimations.StartJumpingAnimation();
         }
     }
 
@@ -93,5 +93,10 @@ public class PlayerMovement : MonoBehaviour
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
+
+        if (groundCheck.IsGrounded())
+        {
+            playerAnimations.CreateDust();
+        }
     }
 }
