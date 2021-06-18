@@ -11,7 +11,7 @@ public class PlayerHealthUIController : MonoBehaviour
     [SerializeField]
     private ObservableIntVariable currentPlayerHealthVariable;
 
-    private readonly string heartGone = "heart_gone";
+    private readonly string HEART_GONE = "heart_gone";
 
     private Animator[] hearthAnimators;
 
@@ -30,7 +30,7 @@ public class PlayerHealthUIController : MonoBehaviour
     {
         if(hearthAnimators[currentPlayerHealthVariable.Value])
         {
-            hearthAnimators[currentPlayerHealthVariable.Value].SetBool(heartGone, true);
+            hearthAnimators[currentPlayerHealthVariable.Value].SetBool(HEART_GONE, true);
         }
     }
 }

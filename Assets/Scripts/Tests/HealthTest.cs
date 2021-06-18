@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class HealthTest : TestClass
+public class HealthTest : MonoBehaviour
 {
     [SerializeField]
     private float waitTime;
