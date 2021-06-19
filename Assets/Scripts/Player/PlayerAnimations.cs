@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator), typeof(Rigidbody2D))]
@@ -12,6 +13,10 @@ public class PlayerAnimations : MonoBehaviour
     private readonly string PLAYER_RUNNING = "running";
     private readonly string PLAYER_JUMPING = "jumping";
     private readonly string PLAYER_FALLING = "falling";
+    private readonly string PLAYER_DIEING = "dieing";
+    private readonly string PLAYER_DAMAGED = "damaged";
+
+    private bool playerDead = false;
 
     private void Start()
     {
@@ -31,8 +36,11 @@ public class PlayerAnimations : MonoBehaviour
 
     public void StartJumpingAnimation()
     {
-        SetJumpingBool(true);
-        CreateDust();
+        if(!playerDead)
+        {
+            SetJumpingBool(true);
+            CreateDust();
+        }
     }
 
     //Set jumping bool to flase inside of startJump animation
@@ -50,14 +58,39 @@ public class PlayerAnimations : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (myRigidbody.velocity.y < fallingVelocityValue)
+        if(!playerDead)
         {
-            SetFallingBool(true);
+            if (myRigidbody.velocity.y < fallingVelocityValue)
+            {
+                SetFallingBool(true);
+            }
+            else
+            {
+                SetFallingBool(false);
+            }
         }
-        else
-        {
-            SetFallingBool(false);
-        }
+    }
+
+    public void StartDieAnimation()
+    {
+        playerDead = true;
+        animator.SetBool(PLAYER_DIEING, true);
+        SetFallingBool(false);
+    }
+
+    public void SetDieingBoolFlase()
+    {
+        animator.SetBool(PLAYER_DIEING, false);
+    }
+
+    public void PlayerDamagedAnimation()
+    {
+        animator.SetBool(PLAYER_DAMAGED, true);
+    }
+
+    public void SetDamagedAnimationFalse()
+    {
+        animator.SetBool(PLAYER_DAMAGED, false);
     }
 
     public void CreateDust() { dustPS.Play(); }

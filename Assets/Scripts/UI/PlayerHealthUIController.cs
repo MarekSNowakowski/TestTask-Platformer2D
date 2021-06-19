@@ -28,9 +28,16 @@ public class PlayerHealthUIController : MonoBehaviour
 
     public void EmptyHeart()
     {
-        if(hearthAnimators[currentPlayerHealthVariable.Value])
+        if((currentPlayerHealthVariable.Value >= 0) && 
+            (currentPlayerHealthVariable.Value != maxPlayerHealthVariable.Value) && 
+            hearthAnimators[currentPlayerHealthVariable.Value])
         {
             hearthAnimators[currentPlayerHealthVariable.Value].SetBool(HEART_GONE, true);
         }
+    }
+
+    private void OnDisable()
+    {
+        currentPlayerHealthVariable.Value = maxPlayerHealthVariable.Value;
     }
 }
