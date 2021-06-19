@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class EnemyAnimations : MonoBehaviour
 
     private readonly string DIEING_ANIMATOR_PARAMETER = "dieing";
     private readonly string DAMAGED_ANIMATOR_PARAMETER = "damaged";
+    private readonly string STATIONARY_ANIMATOR_PARAMETER = "stationary";
 
     private void Start()
     {
@@ -28,6 +30,11 @@ public class EnemyAnimations : MonoBehaviour
     public void SetDamagedAnimationTrue()
     {
         animator.SetBool(DAMAGED_ANIMATOR_PARAMETER, true);
+    }
+
+    internal void SetStationary()
+    {
+        animator.SetBool(STATIONARY_ANIMATOR_PARAMETER, true);
     }
 
     public void SetDamagedAnimationFalse()

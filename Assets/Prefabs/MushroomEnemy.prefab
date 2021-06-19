@@ -15,9 +15,11 @@ GameObject:
   - component: {fileID: 22877736925625763}
   - component: {fileID: 1720501341016956743}
   - component: {fileID: 7152203003618759776}
-  m_Layer: 0
+  - component: {fileID: 229759053}
+  - component: {fileID: 229759052}
+  m_Layer: 8
   m_Name: MushroomEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,9 +121,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
-  path:
-  - {fileID: 0}
-  - {fileID: 0}
+  path: []
+  enemyAnimations: {fileID: 7152203003618759776}
 --- !u!50 &22877736925625763
 Rigidbody2D:
   serializedVersion: 4
@@ -169,3 +170,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6041c7b00d56774c988b71ba15c0470, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &229759053
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22877736925625785}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!114 &229759052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22877736925625785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a5b3c57b953b914a9df272acf9679c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCurrentHealth: {fileID: 11400000, guid: 2112659bbf053a04dbe39ddda9b2e62a, type: 2}

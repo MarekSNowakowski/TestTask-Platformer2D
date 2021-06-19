@@ -13,6 +13,9 @@ public class PatrollingEnemyMovement : MonoBehaviour
     [SerializeField]
     private Transform[] path;
 
+    [SerializeField]
+    EnemyAnimations enemyAnimations;
+
     private Vector3 position;
     private Transform currentGoal;
     private int currentPoint;
@@ -24,7 +27,14 @@ public class PatrollingEnemyMovement : MonoBehaviour
     private void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
-        ChangeGoal();
+        if(path.Length < 2)
+        {
+            enemyAnimations.SetStationary();
+        }
+        else
+        {
+            ChangeGoal();
+        }
     }
 
     private void FixedUpdate()
@@ -34,32 +44,38 @@ public class PatrollingEnemyMovement : MonoBehaviour
 
     private void MoveAlongThePath()
     {
-        if (Vector3.Distance(transform.position, path[currentPoint].position) > ROUNDING_DISTANCE)
+        if(path.Length > 0)
         {
-            position = Vector3.MoveTowards(transform.position, path[currentPoint].position, moveSpeed * Time.deltaTime);
-            myRigidbody.MovePosition(position);
-        }
-        else
-        {
-            ChangeGoal();
+            if (Vector3.Distance(transform.position, path[currentPoint].position) > ROUNDING_DISTANCE)
+            {
+                position = Vector3.MoveTowards(transform.position, path[currentPoint].position, moveSpeed * Time.deltaTime);
+                myRigidbody.MovePosition(position);
+            }
+            else
+            {
+                ChangeGoal();
+            }
         }
     }
 
     private void ChangeGoal()
     {
-        if (currentPoint == path.Length - 1)
+        if (path.Length > 1)
         {
-            currentPoint = 0;
-            currentGoal = path[0];
-        }
-        else
-        {
-            currentPoint++;
-            currentGoal = path[currentPoint];
-        }
+            if (currentPoint == path.Length - 1)
+            {
+                currentPoint = 0;
+                currentGoal = path[0];
+            }
+            else
+            {
+                currentPoint++;
+                currentGoal = path[currentPoint];
+            }
 
-        directionX = transform.position.x - currentGoal.position.x;
-        CheckFlip(directionX);
+            directionX = transform.position.x - currentGoal.position.x;
+            CheckFlip(directionX);
+        }
     }
 
     private void CheckFlip(float directionX)
