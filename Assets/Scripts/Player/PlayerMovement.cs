@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D myRigidbody;
     private bool facingRight = true;
     private float moveInputX;
+    private bool attacking = false;
 
     private readonly string HORIZONTAL_AXIS = "Horizontal";
     private readonly string JUMP_KEY = "Jump";
@@ -31,8 +32,27 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
-        ChangeSide();
+        if(!attacking)
+        {
+            Move();
+            ChangeSide();
+        }
+    }
+
+    private readonly float fallingVelocityValue = -0.3f;
+
+    private void LateUpdate()
+    {
+        if (myRigidbody.velocity.y < fallingVelocityValue)
+        {
+            playerAnimations.SetFallingBool(true);
+            playerAnimations.SetAttackAnimationFalse();
+            OnAttackStop();
+        }
+        else
+        {
+            playerAnimations.SetFallingBool(false);
+        }
     }
 
     private void Update()
@@ -67,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
         {
             extraJumpsLeft = extraJumps;
         }
-        if (Input.GetButtonDown(JUMP_KEY) && extraJumpsLeft > 0)
+        if (Input.GetButtonDown(JUMP_KEY) && extraJumpsLeft > 0 && !attacking)
         {
             myRigidbody.velocity = Vector2.up * jumpSpeed;
             extraJumpsLeft--;
@@ -98,5 +118,21 @@ public class PlayerMovement : MonoBehaviour
         {
             playerAnimations.CreateDust();
         }
+    }
+
+    public void OnAttackStart()
+    {
+        attacking = true;
+        myRigidbody.velocity = Vector2.zero;
+    }
+
+    public void OnAttackStop()
+    {
+        attacking = false;
+    }
+
+    public bool IsPlayerGrounded()
+    {
+        return groundCheck.IsGrounded();
     }
 }

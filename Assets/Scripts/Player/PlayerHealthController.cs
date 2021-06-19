@@ -8,6 +8,8 @@ public class PlayerHealthController : MonoBehaviour
     private ObservableIntVariable playerCurrentHealth;
     [SerializeField]
     private PlayerAnimations playerAnimations;
+    [SerializeField]
+    private PlayerMovement playerMovement;
 
     public void OnPlayerDamaged()
     {
@@ -27,6 +29,7 @@ public class PlayerHealthController : MonoBehaviour
         else
         {
             playerAnimations.PlayerDamagedAnimation();
+            playerMovement.OnAttackStop();
         }
     }
 

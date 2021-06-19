@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 22877736925625788}
   - component: {fileID: 22877736925625791}
   - component: {fileID: 22877736925625763}
+  - component: {fileID: 1720501341016956743}
+  - component: {fileID: 7152203003618759776}
   m_Layer: 0
   m_Name: MushroomEnemy
   m_TagString: Untagged
@@ -141,3 +143,29 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1720501341016956743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22877736925625785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef369b4f463d9a04bac4eb86f4d3c563, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: {fileID: 11400000, guid: 90361109899a2c545bcfe943ad5a54b3, type: 2}
+  enemyAnimations: {fileID: 7152203003618759776}
+--- !u!114 &7152203003618759776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22877736925625785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6041c7b00d56774c988b71ba15c0470, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

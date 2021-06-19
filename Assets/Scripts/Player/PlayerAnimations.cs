@@ -15,6 +15,7 @@ public class PlayerAnimations : MonoBehaviour
     private readonly string PLAYER_FALLING = "falling";
     private readonly string PLAYER_DIEING = "dieing";
     private readonly string PLAYER_DAMAGED = "damaged";
+    private readonly string PLAYER_ATTACK = "attacking";
 
     private bool playerDead = false;
 
@@ -51,23 +52,9 @@ public class PlayerAnimations : MonoBehaviour
 
     public void SetFallingBool(bool falling)
     {
-        animator.SetBool(PLAYER_FALLING, falling);
-    }
-
-    private readonly float fallingVelocityValue = -0.3f;
-
-    private void LateUpdate()
-    {
-        if(!playerDead)
+        if (!playerDead)
         {
-            if (myRigidbody.velocity.y < fallingVelocityValue)
-            {
-                SetFallingBool(true);
-            }
-            else
-            {
-                SetFallingBool(false);
-            }
+            animator.SetBool(PLAYER_FALLING, falling);
         }
     }
 
@@ -86,11 +73,23 @@ public class PlayerAnimations : MonoBehaviour
     public void PlayerDamagedAnimation()
     {
         animator.SetBool(PLAYER_DAMAGED, true);
+        SetAttackAnimationFalse();
+        SetRunningBool(false);
     }
 
     public void SetDamagedAnimationFalse()
     {
         animator.SetBool(PLAYER_DAMAGED, false);
+    }
+
+    public void SetAttackAnimationTrue()
+    {
+        animator.SetBool(PLAYER_ATTACK, true);
+    }
+
+    public void SetAttackAnimationFalse()
+    {
+        animator.SetBool(PLAYER_ATTACK, false);
     }
 
     public void CreateDust() { dustPS.Play(); }
