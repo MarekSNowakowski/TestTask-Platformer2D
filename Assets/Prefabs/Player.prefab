@@ -41,7 +41,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -56,11 +56,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0, y: 1}
-      - {x: -0.95105654, y: 0.30901697}
-      - {x: -0.5877852, y: -0.80901706}
-      - {x: 0.58778536, y: -0.80901694}
-      - {x: 0.9510565, y: 0.30901712}
+    - - {x: 0.65286046, y: 0.09324932}
+      - {x: 0.09472924, y: 0.09139684}
+      - {x: 0.101345256, y: -0.41004717}
+      - {x: 0.65428066, y: -0.41004658}
+      - {x: 0.96919155, y: -0.16853815}
 --- !u!1 &9191191152875271345
 GameObject:
   m_ObjectHideFlags: 0
@@ -4866,7 +4866,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4930,6 +4930,7 @@ GameObject:
   - component: {fileID: 1462875900100685037}
   - component: {fileID: 1774171051}
   - component: {fileID: 1774171052}
+  - component: {fileID: 1664103485954269290}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -4973,7 +4974,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5078,6 +5079,8 @@ MonoBehaviour:
   extraJumps: 1
   groundCheck: {fileID: 9191191152875271347}
   playerAnimations: {fileID: 9191191153265861196}
+  knockbackTime: 0.3
+  knocbackForce: 5
 --- !u!114 &9191191153265861196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5105,6 +5108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCurrentHealth: {fileID: 11400000, guid: 2112659bbf053a04dbe39ddda9b2e62a, type: 2}
   playerAnimations: {fileID: 9191191153265861196}
+  playerMovement: {fileID: 9191191153265861197}
 --- !u!114 &1774171051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5148,3 +5152,60 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAnimations: {fileID: 9191191153265861196}
   playerMovement: {fileID: 9191191153265861197}
+  playerAttackRange: {fileID: 8932664084208180256}
+  playerAttack: {fileID: 11400000, guid: 8bdbade78f8e35d4bb02772d42ddaa13, type: 2}
+  enemyContactFilter:
+    useTriggers: 1
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 256
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+--- !u!114 &1664103485954269290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9191191153265861207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 0.75
+  m_LightVolumeOpacity: 0
+  m_ApplyToSortingLayers: 00000000
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 0
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_ShadowIntensity: 0
+  m_ShadowVolumeIntensity: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 4
+  m_PointLightDistance: 3
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
