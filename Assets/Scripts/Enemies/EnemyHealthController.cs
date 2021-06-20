@@ -7,6 +7,7 @@ public class EnemyHealthController : MonoBehaviour
 
     [SerializeField]
     private EnemyAnimations enemyAnimations;
+
     private int currentHealth;
 
     

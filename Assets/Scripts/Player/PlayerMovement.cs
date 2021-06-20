@@ -1,7 +1,9 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IKnockbackable
 {
     [SerializeField]
     private float horizontalSpeed;
@@ -20,9 +22,15 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D myRigidbody;
     private bool facingRight = true;
     private float moveInputX;
-    private bool attacking = false;
+    [SerializeField]
+    private float knockbackTime;
+    [SerializeField]
+    private float knocbackForce;
+
+    private PlayerMoveState moveState = PlayerMoveState.Idle;
 
     private readonly string HORIZONTAL_AXIS = "Horizontal";
+
     private readonly string JUMP_KEY = "Jump";
 
     private void Start()
@@ -32,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!attacking)
+        if (moveState == PlayerMoveState.Idle || moveState == PlayerMoveState.Moving || moveState == PlayerMoveState.Falling)
         {
             Move();
             ChangeSide();
@@ -43,21 +51,27 @@ public class PlayerMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (myRigidbody.velocity.y < fallingVelocityValue)
-        {
-            playerAnimations.SetFallingBool(true);
-            playerAnimations.SetAttackAnimationFalse();
-            OnAttackStop();
-        }
-        else
-        {
-            playerAnimations.SetFallingBool(false);
-        }
+        HandleFalling();
     }
 
     private void Update()
     {
         Jump();
+    }
+
+    private void HandleFalling()
+    {
+        if (myRigidbody.velocity.y < fallingVelocityValue &&
+            (moveState == PlayerMoveState.Idle || moveState == PlayerMoveState.Moving || moveState == PlayerMoveState.Falling))
+        {
+            moveState = PlayerMoveState.Falling;
+            playerAnimations.SetFallingBool(true);
+            playerAnimations.SetAttackAnimationFalse();
+        }
+        else
+        {
+            playerAnimations.SetFallingBool(false);
+        }
     }
 
     private void Move()
@@ -73,10 +87,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Mathf.Abs(moveInputX) > 0)
         {
+            ChangeStateToMoving();
             playerAnimations.SetRunningBool(true);
         }
         else
         {
+            ChangeStateToIdle();
             playerAnimations.SetRunningBool(false);
         }
     }
@@ -86,8 +102,10 @@ public class PlayerMovement : MonoBehaviour
         if(groundCheck.IsGrounded())
         {
             extraJumpsLeft = extraJumps;
+            playerAnimations.StopJumpingAnimation();
         }
-        if (Input.GetButtonDown(JUMP_KEY) && extraJumpsLeft > 0 && !attacking)
+        if (Input.GetButtonDown(JUMP_KEY) && extraJumpsLeft > 0 &&
+            ( moveState == PlayerMoveState.Idle || moveState == PlayerMoveState.Moving || moveState == PlayerMoveState.Falling ))
         {
             myRigidbody.velocity = Vector2.up * jumpSpeed;
             extraJumpsLeft--;
@@ -120,19 +138,68 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void ChangeStateToMoving()
+    {
+        moveState = PlayerMoveState.Moving;
+    }
+
     public void OnAttackStart()
     {
-        attacking = true;
+        moveState = PlayerMoveState.Attacking;
         myRigidbody.velocity = Vector2.zero;
     }
 
     public void OnAttackStop()
     {
-        attacking = false;
+        ChangeStateToIdle();
     }
 
     public bool IsPlayerGrounded()
     {
         return groundCheck.IsGrounded();
     }
+
+    public void StartKnocback(Vector2 enemyPosition)
+    {
+        moveState = PlayerMoveState.Stagger;
+        playerAnimations.SetFallingBool(false);
+        Vector2 direction = new Vector2(transform.position.x - enemyPosition.x, transform.position.y - enemyPosition.y);
+        ApplyKnockBack(direction);
+    }
+
+    private void ApplyKnockBack(Vector2 direction)
+    {
+        myRigidbody.velocity = direction * knocbackForce;
+    }
+
+    public void EndKnocback()
+    {
+        ChangeStateToIdle();
+    }
+
+    private void ChangeStateToIdle()
+    {
+        moveState = PlayerMoveState.Idle;
+    }
+
+    public float GetKnockbackTime()
+    {
+        return knockbackTime;
+    }
+
+    public void PlayerDead()
+    {
+        moveState = PlayerMoveState.Dead;
+    }
 }
+
+enum PlayerMoveState
+{
+    Idle,
+    Moving,
+    Attacking,
+    Falling,
+    Stagger,
+    Dead
+}
+

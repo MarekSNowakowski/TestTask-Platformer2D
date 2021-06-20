@@ -45,7 +45,7 @@ public class PlayerAnimations : MonoBehaviour
     }
 
     //Set jumping bool to flase inside of startJump animation
-    public void StopJumpingBool()
+    public void StopJumpingAnimation()
     {
         SetJumpingBool(false);
     }
@@ -55,6 +55,10 @@ public class PlayerAnimations : MonoBehaviour
         if (!playerDead)
         {
             animator.SetBool(PLAYER_FALLING, falling);
+        }
+        else
+        {
+            animator.SetBool(PLAYER_FALLING, false);
         }
     }
 

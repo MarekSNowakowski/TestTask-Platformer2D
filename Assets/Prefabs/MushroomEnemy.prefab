@@ -199,3 +199,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCurrentHealth: {fileID: 11400000, guid: 2112659bbf053a04dbe39ddda9b2e62a, type: 2}
+  enemyAttack: {fileID: 11400000, guid: 28dc20e502874ce4ba3946c209e18699, type: 2}

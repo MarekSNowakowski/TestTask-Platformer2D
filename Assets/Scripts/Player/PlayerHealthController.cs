@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,19 +19,24 @@ public class PlayerHealthController : MonoBehaviour
 
     private void HandleAnimations()
     {
-        if (!playerCurrentHealth || !playerAnimations)
+        if (!playerCurrentHealth || !playerAnimations || !playerMovement)
         {
             Debug.LogWarning("Player health controller is missing a reference!");
         }
         else if (playerCurrentHealth.Value <= 0)
         {
             playerAnimations.StartDieAnimation();
+            playerMovement.PlayerDead();
         }
         else
         {
             playerAnimations.PlayerDamagedAnimation();
-            playerMovement.OnAttackStop();
         }
+    }
+
+    internal void DamagePlayer(Transform transform, int value)
+    {
+        throw new NotImplementedException();
     }
 
     public void DeactivatePlayer()
