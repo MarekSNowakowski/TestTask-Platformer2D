@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,16 +22,25 @@ public class EnemyAttackController : MonoBehaviour
     {
         if (collision.CompareTag(PLAYER_TAG))
         {
-            if(playerCurrentHealth && enemyAttack)
-            {
-                playerCurrentHealth.Value -= enemyAttack.Value;
-            }
-
+            HandlePlayerHit();
 
             if( knockbackableComponent != null || collision.TryGetComponent(out knockbackableComponent) )
             {
                 ApplyKnockback();
             }
+        }
+    }
+
+    protected virtual void HandlePlayerHit()
+    {
+        ApplyDamageToPlayer();
+    }
+
+    private void ApplyDamageToPlayer()
+    {
+        if (playerCurrentHealth && enemyAttack)
+        {
+            playerCurrentHealth.Value -= enemyAttack.Value;
         }
     }
 

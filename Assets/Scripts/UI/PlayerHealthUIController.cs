@@ -15,6 +15,11 @@ public class PlayerHealthUIController : MonoBehaviour
 
     private Animator[] hearthAnimators;
 
+    private void Start()
+    {
+        currentPlayerHealthVariable.Value = maxPlayerHealthVariable.Value;
+    }
+
     private void Awake()
     {
         hearthAnimators = new Animator[maxPlayerHealthVariable.Value];
