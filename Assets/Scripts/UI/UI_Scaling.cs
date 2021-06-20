@@ -5,7 +5,7 @@ using UnityEngine;
 public class UI_Scaling : MonoBehaviour
 {
     [SerializeField]
-    float heightRatio;
+    private float heightRatio;
 
     // Start is called before the first frame update
     void Start()

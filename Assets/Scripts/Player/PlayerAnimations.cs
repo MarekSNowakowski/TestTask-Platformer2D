@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator), typeof(Rigidbody2D))]
@@ -12,6 +13,11 @@ public class PlayerAnimations : MonoBehaviour
     private readonly string PLAYER_RUNNING = "running";
     private readonly string PLAYER_JUMPING = "jumping";
     private readonly string PLAYER_FALLING = "falling";
+    private readonly string PLAYER_DIEING = "dieing";
+    private readonly string PLAYER_DAMAGED = "damaged";
+    private readonly string PLAYER_ATTACK = "attacking";
+
+    private bool playerDead = false;
 
     private void Start()
     {
@@ -31,33 +37,63 @@ public class PlayerAnimations : MonoBehaviour
 
     public void StartJumpingAnimation()
     {
-        SetJumpingBool(true);
-        CreateDust();
+        if(!playerDead)
+        {
+            SetJumpingBool(true);
+            CreateDust();
+        }
     }
 
     //Set jumping bool to flase inside of startJump animation
-    public void StopJumpingBool()
+    public void StopJumpingAnimation()
     {
         SetJumpingBool(false);
     }
 
     public void SetFallingBool(bool falling)
     {
-        animator.SetBool(PLAYER_FALLING, falling);
-    }
-
-    private readonly float fallingVelocityValue = -0.3f;
-
-    private void LateUpdate()
-    {
-        if (myRigidbody.velocity.y < fallingVelocityValue)
+        if (!playerDead)
         {
-            SetFallingBool(true);
+            animator.SetBool(PLAYER_FALLING, falling);
         }
         else
         {
-            SetFallingBool(false);
+            animator.SetBool(PLAYER_FALLING, false);
         }
+    }
+
+    public void StartDieAnimation()
+    {
+        playerDead = true;
+        animator.SetBool(PLAYER_DIEING, true);
+        SetFallingBool(false);
+    }
+
+    public void SetDieingBoolFlase()
+    {
+        animator.SetBool(PLAYER_DIEING, false);
+    }
+
+    public void PlayerDamagedAnimation()
+    {
+        animator.SetBool(PLAYER_DAMAGED, true);
+        SetAttackAnimationFalse();
+        SetRunningBool(false);
+    }
+
+    public void SetDamagedAnimationFalse()
+    {
+        animator.SetBool(PLAYER_DAMAGED, false);
+    }
+
+    public void SetAttackAnimationTrue()
+    {
+        animator.SetBool(PLAYER_ATTACK, true);
+    }
+
+    public void SetAttackAnimationFalse()
+    {
+        animator.SetBool(PLAYER_ATTACK, false);
     }
 
     public void CreateDust() { dustPS.Play(); }
