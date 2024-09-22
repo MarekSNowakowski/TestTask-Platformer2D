@@ -1,0 +1,1 @@
+Test assignment for the position of Junior Unity Developer at Blum Entertainment. The task is to prepare a simple 2D platform game in Unity, meeting certain requirements, with the help of the materials received.
